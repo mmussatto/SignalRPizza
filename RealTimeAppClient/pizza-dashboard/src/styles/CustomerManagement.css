@@ -1,0 +1,46 @@
+.customer-management {
+	padding: 20px;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.customer-form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.customer-form input {
+	padding: 10px;
+	font-size: 16px;
+}
+
+.customer-form button {
+	padding: 10px;
+	font-size: 16px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.customer-form button:hover {
+	background-color: #0056b3;
+}
+
+.customer-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.customer-item {
+	padding: 10px;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+
+.customer-item:hover {
+	background-color: #f0f0f0;
+}

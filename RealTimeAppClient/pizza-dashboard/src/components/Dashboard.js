@@ -7,8 +7,12 @@ const Dashboard = () => {
 		<div>
 			<OrderList />
 			<PizzaChart />
-			<Link to="/manage-orders">Manage Orders</Link> <br />
-			<Link to="/customer-orders/1">Customer Orders</Link>
+			<Link to="/manage-orders">
+				<h2>Manage Orders</h2>
+			</Link>
+			<Link to="/customers">
+				<h2>Manage Customers</h2>
+			</Link>
 		</div>
 	);
 };
