@@ -1,0 +1,87 @@
+.customer-order-page {
+	background-color: #f9f9f9;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin-top: 20px;
+}
+
+.customer-order-page h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.customer-order-page input {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+}
+
+.customer-order-page button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #28a745;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.customer-order-page button:hover {
+	background-color: #218838;
+}
+
+.order-list-container {
+	padding: 20px;
+}
+
+.order-list {
+	background-color: #f9f9f9;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-list h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.order-item {
+	background-color: #fff;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-item strong {
+	color: #333;
+}
+
+.completed-orders {
+	margin-top: 20px;
+}
+
+.completed-orders button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.completed-orders button:hover {
+	background-color: #0056b3;
+}
+
+.completed-orders ul {
+	margin-top: 10px;
+}
