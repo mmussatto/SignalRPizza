@@ -75,9 +75,16 @@ const CustomerManagement = () => {
 						className="customer-item"
 						onClick={() => handleCustomerClick(customer.id)}
 					>
-						<p>{customer.name}</p>
-						<p>{customer.email}</p>
-						<p>{customer.phone}</p>
+						<strong>ID: </strong> {customer.id} <br />
+						<strong>Name: </strong>
+						{customer.name}
+						<br />
+						<strong>Email: </strong>
+						{customer.email}
+						<br />
+						<strong>Phone: </strong>
+						{customer.phone}
+						<br />
 					</div>
 				))}
 			</div>
