@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     public DbSet<DataItem> DataItems { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -76,6 +76,7 @@ app.UseRouting();
 app.UseCors();
 app.MapControllers();
 app.MapHub<DataHub>("/datahub");
+app.MapHub<ChatHub>("/chathub");
 
 app.UseHttpsRedirection();
 
