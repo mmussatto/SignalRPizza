@@ -3,6 +3,7 @@ import axios from "axios";
 import * as signalR from "@microsoft/signalr";
 import "../styles/CustomerOrderPage.css";
 import { useParams } from "react-router-dom";
+import ChatWindow from "./ChatWindow";
 
 const CustomerOrderPage = () => {
 	const { customerId: customerIdString } = useParams();
@@ -74,6 +75,8 @@ const CustomerOrderPage = () => {
 				onChange={(e) => setPizzaName(e.target.value)}
 			/>
 			<button onClick={handleCreateOrder}>Create Order</button>
+
+			<ChatWindow customerId={customerId} sender="Customer" />
 
 			<div className="order-list-container">
 				<div className="order-list">

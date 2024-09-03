@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ChatWindow from "./ChatWindow";
 import "../styles/CustomerManagement.css";
 
 const CustomerManagement = () => {
 	const [customers, setCustomers] = useState([]);
 	const [newCustomer, setNewCustomer] = useState({ name: "", email: "", phone: "" });
+	const [activeChats, setActiveChats] = useState([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -39,6 +41,17 @@ const CustomerManagement = () => {
 
 	const handleCustomerClick = (customerId) => {
 		navigate(`/customer-orders/${customerId}`);
+	};
+
+	const handleChatInitiation = (customerId, event) => {
+		event.stopPropagation(); // Prevent the click event from propagating to the parent div
+		if (!activeChats.includes(customerId)) {
+			setActiveChats([...activeChats, customerId]);
+		}
+	};
+
+	const handleCloseChat = (customerId) => {
+		setActiveChats(activeChats.filter((id) => id !== customerId));
 	};
 
 	return (
@@ -85,6 +98,23 @@ const CustomerManagement = () => {
 						<strong>Phone: </strong>
 						{customer.phone}
 						<br />
+						<button onClick={(event) => handleChatInitiation(customer.id, event)}>
+							Chat
+						</button>
+					</div>
+				))}
+			</div>
+			<div className="chat-windows">
+				{activeChats.map((customerId) => (
+					<div key={customerId} className="chat-window">
+						<button
+							className="close-button"
+							onClick={() => handleCloseChat(customerId)}
+						>
+							✖
+						</button>
+						<h3>Chat with Customer {customerId}</h3>
+						<ChatWindow customerId={customerId} sender="Employee" />
 					</div>
 				))}
 			</div>
