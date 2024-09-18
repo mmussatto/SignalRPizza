@@ -4,6 +4,9 @@
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	margin-top: 20px;
+	display: flex;
+	flex-direction: column; /* Stack elements vertically */
+	transition: all 0.3s ease-in-out; /* Smooth transition for layout changes */
 }
 
 .customer-order-page h2 {
@@ -11,18 +14,23 @@
 	margin-bottom: 20px;
 }
 
-.customer-order-page input {
-	display: block;
-	width: 100%;
-	padding: 10px;
+/* Flex container for input and button */
+.order-input-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	margin-bottom: 10px;
+}
+
+.order-input-container input {
+	flex: 1;
+	padding: 10px;
+	margin-right: 10px;
 	border-radius: 4px;
 	border: 1px solid #ccc;
 }
 
-.customer-order-page button {
-	display: block;
-	width: 100%;
+.order-input-container button {
 	padding: 10px;
 	background-color: #28a745;
 	color: #fff;
@@ -31,12 +39,40 @@
 	cursor: pointer;
 }
 
-.customer-order-page button:hover {
+.order-input-container button:hover {
 	background-color: #218838;
+}
+
+/* Button to toggle chat window */
+.toggle-chat-button {
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.toggle-chat-button:hover {
+	background-color: #0056b3;
 }
 
 .order-list-container {
 	padding: 20px;
+	width: 100%; /* Full width when chat is closed */
+	transition: width 0.3s ease-in-out; /* Smooth transition for width */
+}
+
+.customer-order-page.chat-open .order-list-container {
+	width: 70%; /* Shrink to 70% when chat is open */
+}
+
+.content-container {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	transition: width 0.3s ease-in-out;
 }
 
 .order-list {
@@ -84,4 +120,66 @@
 
 .completed-orders ul {
 	margin-top: 10px;
+}
+
+/* Chat window container */
+.chat-window-container {
+	width: 0; /* Initially hidden */
+	transition: width 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition for width and transform */
+	transform: translateX(100%); /* Initially off-screen */
+	display: flex;
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+}
+
+.chat-window-container.open {
+	width: 30%; /* Take up 30% of the screen when open */
+	transform: translateX(0); /* Slide in when open */
+}
+
+.chat-window {
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 100%;
+	max-width: 400px; /* Limit the maximum width of the chat window */
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background-color: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	animation: slideIn 0.3s ease-in-out;
+}
+
+.chat-window h3 {
+	margin: 0 0 10px 0;
+}
+
+.chat-window .messages {
+	flex: 1;
+	overflow-y: auto;
+	margin-bottom: 10px;
+}
+
+.chat-window .input-group {
+	display: flex;
+}
+
+.chat-window .input-group input {
+	flex: 1;
+	padding: 5px;
+}
+
+.chat-window .input-group button {
+	padding: 5px 10px;
+}
+
+/* Animation for sliding in the chat window */
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
 }
