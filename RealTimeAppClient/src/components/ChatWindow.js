@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import { fetchData } from "../api/api";
 import config from "../config";
 

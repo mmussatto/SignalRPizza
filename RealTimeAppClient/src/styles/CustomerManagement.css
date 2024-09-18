@@ -1,7 +1,19 @@
+.customer-management-container {
+	display: flex;
+	justify-content: space-between;
+	height: 100vh; /* Make the container take the full height of the viewport */
+	padding-right: 20px; /* Add some padding to the right side */
+	transition: all 0.3s ease-in-out; /* Smooth transition for layout changes */
+}
+
 .customer-management {
 	padding: 20px;
-	max-width: 600px;
-	margin: 0 auto;
+	width: 100%; /* Full width when no chat is open */
+	transition: width 0.3s ease-in-out; /* Smooth transition for width */
+}
+
+.customer-management-container.chat-open .customer-management {
+	width: 40%; /* Shrink to 40% when chat is open */
 }
 
 .customer-form {
@@ -45,20 +57,33 @@
 	background-color: #f0f0f0;
 }
 
-.chat-windows {
+/* Chat window container */
+.chat-window-container {
+	width: 0; /* Initially hidden */
+	transition: width 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition for width and transform */
+	transform: translateX(100%); /* Initially off-screen */
 	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+}
+
+.chat-window-container.open {
+	width: 55%; /* Take up 55% of the screen when open */
+	transform: translateX(0); /* Slide in when open */
 }
 
 .chat-window {
 	border: 1px solid #ccc;
 	padding: 10px;
-	width: 300px;
+	width: 100%;
+	max-width: 400px; /* Limit the maximum width of the chat window */
 	height: 400px;
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	background-color: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	animation: slideIn 0.3s ease-in-out;
 }
 
 .chat-window h3 {
@@ -92,4 +117,14 @@
 	background: none;
 	border: none;
 	font-size: 16px;
+}
+
+/* Animation for sliding in the chat window */
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
 }
