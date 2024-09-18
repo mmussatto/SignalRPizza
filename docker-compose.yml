@@ -3,7 +3,7 @@ version: "3.8"
 services:
     frontend:
         build:
-            context: ./RealTimeAppClient/pizza-dashboard
+            context: ./RealTimeAppClient
             dockerfile: Dockerfile
         ports:
             - "3000:80"

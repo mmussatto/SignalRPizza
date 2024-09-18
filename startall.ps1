@@ -1,5 +1,5 @@
 # Define the paths to your projects
-$reactAppPath = "./RealTimeAppClient/pizza-dashboard"
+$reactAppPath = "./RealTimeAppClient"
 $dotnetAppPath = "./RealTimeAppServer"
 
 # Start the React app in a new terminal window
