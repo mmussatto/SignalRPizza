@@ -5,6 +5,8 @@ services:
         build:
             context: ./RealTimeAppClient
             dockerfile: Dockerfile
+        environment:
+            - DB_FILE_PATH=/app/RealTimeApp.db
         ports:
             - "3000:80"
         depends_on:
