@@ -11,6 +11,8 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
+import { fetchData } from "../api/api";
+import config from "../config";
 
 // Register the components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -20,19 +22,17 @@ const PizzaChart = () => {
 
 	useEffect(() => {
 		//Fetch intial orders
-		fetch("https://localhost:7018/api/Orders")
-			.then((Response) => Response.json())
-			.then((data) => {
-				const pizzaCounts = data.reduce((acc, order) => {
-					acc[order.pizzaName] = (acc[order.pizzaName] || 0) + 1;
-					return acc;
-				}, {});
-				setPizzaData(pizzaCounts);
-			});
+		fetchData("/api/Orders").then((data) => {
+			const pizzaCounts = data.reduce((acc, order) => {
+				acc[order.pizzaName] = (acc[order.pizzaName] || 0) + 1;
+				return acc;
+			}, {});
+			setPizzaData(pizzaCounts);
+		});
 
 		//Setup SignalR connection
 		const connection = new signalR.HubConnectionBuilder()
-			.withUrl("https://localhost:7018/dataHub")
+			.withUrl(`${config.apiBaseUrl}/dataHub`)
 			.build();
 
 		connection.on("ReceiveOrder", (order) => {

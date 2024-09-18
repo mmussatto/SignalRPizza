@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import ChatWindow from "./ChatWindow";
 import "../styles/CustomerManagement.css";
+import { fetchData, postData } from "../api/api";
 
 const CustomerManagement = () => {
 	const [customers, setCustomers] = useState([]);
@@ -16,8 +16,8 @@ const CustomerManagement = () => {
 
 	const fetchCustomers = async () => {
 		try {
-			const response = await axios.get("https://localhost:7018/api/Customers");
-			setCustomers(response.data);
+			const response = await fetchData("/api/Customers");
+			setCustomers(response);
 		} catch (error) {
 			console.error("Error fetching customers: ", error);
 		}
@@ -31,7 +31,7 @@ const CustomerManagement = () => {
 	const handleAddCustomer = async (e) => {
 		e.preventDefault();
 		try {
-			await axios.post("https://localhost:7018/api/Customers", newCustomer);
+			await postData("/api/Customers", newCustomer);
 			fetchCustomers();
 			setNewCustomer({ name: "", email: "", phone: "" });
 		} catch (error) {

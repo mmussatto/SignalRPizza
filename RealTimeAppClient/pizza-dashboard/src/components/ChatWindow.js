@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { fetchData } from "../api/api";
+import config from "../config";
 
 const ChatWindow = ({ customerId, sender }) => {
 	const [messagesHistory, setMessagesHistory] = useState([]);
@@ -8,7 +10,7 @@ const ChatWindow = ({ customerId, sender }) => {
 
 	useEffect(() => {
 		const newConnection = new HubConnectionBuilder()
-			.withUrl(`https://localhost:7018/chatHub?customerId=${customerId}`)
+			.withUrl(`${config.apiBaseUrl}/chatHub?customerId=${customerId}`)
 			.withAutomaticReconnect()
 			.build();
 
@@ -26,9 +28,7 @@ const ChatWindow = ({ customerId, sender }) => {
 						setMessagesHistory((prevMessages) => [...prevMessages, m]);
 					});
 
-					fetch(`https://localhost:7018/api/Chat/${customerId}`)
-						.then((response) => response.json())
-						.then((data) => setMessagesHistory(data));
+					fetchData(`/api/Chat/${customerId}`).then((data) => setMessagesHistory(data));
 				})
 				.catch((e) => console.log("Connection failed:", e));
 		}
@@ -37,7 +37,6 @@ const ChatWindow = ({ customerId, sender }) => {
 	const sendMessage = async () => {
 		if (connection._connectionStarted) {
 			await connection.send("SendMessage", customerId, sender, message);
-			// setMessagesHistory((prevMessages) => [...prevMessages, message]);
 			setMessage("");
 		} else {
 			alert("No connection to server yet.");

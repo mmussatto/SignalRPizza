@@ -3,6 +3,8 @@ import axios from "axios";
 import * as signalR from "@microsoft/signalr";
 import "../styles/CustomerOrderPage.css";
 import { useParams } from "react-router-dom";
+import { fetchData, postData } from "../api/api";
+import config from "../config";
 import ChatWindow from "./ChatWindow";
 
 const CustomerOrderPage = () => {
@@ -15,12 +17,10 @@ const CustomerOrderPage = () => {
 	useEffect(() => {
 		if (isNaN(customerId)) return;
 
-		fetch(`https://localhost:7018/api/Orders?customerId=${customerId}`)
-			.then((response) => response.json())
-			.then((data) => setOrders(data));
+		fetchData(`/api/Orders?customerId=${customerId}`).then((data) => setOrders(data));
 
 		const connection = new signalR.HubConnectionBuilder()
-			.withUrl("https://localhost:7018/dataHub")
+			.withUrl(`${config.apiBaseUrl}/dataHub`)
 			.build();
 
 		connection.on("ReceiveOrder", (order) => {
@@ -46,7 +46,7 @@ const CustomerOrderPage = () => {
 
 	const handleCreateOrder = async () => {
 		try {
-			await axios.post("https://localhost:7018/api/Orders", {
+			await postData("/api/Orders", {
 				pizzaName,
 				customerId,
 				status: "Received",

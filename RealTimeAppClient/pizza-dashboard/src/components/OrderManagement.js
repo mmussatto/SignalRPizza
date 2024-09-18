@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { fetchData, postData, putData } from "../api/api";
+import config from "../config";
 
 const OrderManagement = () => {
 	const [pizzaName, setPizzaName] = useState("");
@@ -8,11 +10,11 @@ const OrderManagement = () => {
 
 	const handleCreateOrder = async () => {
 		try {
-			const response = await axios.post("https://localhost:7018/api/Orders", {
+			const response = await postData("/api/Orders", {
 				pizzaName,
 				customerName,
 			});
-			alert(`Order created with ID: ${response.data.id}`);
+			alert(`Order created with ID: ${response.id}`);
 		} catch (error) {
 			console.error("Error creating order:", error);
 			alert("Failed to create order");
@@ -21,7 +23,7 @@ const OrderManagement = () => {
 
 	const handleMarkAsDone = async () => {
 		try {
-			await axios.put(`https://localhost:7018/api/Orders/advance/${orderId}`);
+			await putData(`/api/Orders/advance/${orderId}`);
 			alert(`Order ${orderId} marked as done`);
 		} catch (error) {
 			console.error("Error marking order as done:", error);

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 import "../styles/OrderList.css";
+import { fetchData } from "../api/api";
+import config from "../config";
 
 const OrderList = () => {
 	const [orders, setOrders] = useState([]);
 
 	useEffect(() => {
 		//Fetch initial orders
-		fetch("https://localhost:7018/api/Orders")
-			.then((response) => response.json())
-			.then((data) => setOrders(data));
+		fetchData("/api/Orders").then((data) => setOrders(data));
 
 		//Set up SignalR connection
 		const connection = new signalR.HubConnectionBuilder()
-			.withUrl("https://localhost:7018/dataHub")
+			.withUrl(`${config.apiBaseUrl}/dataHub`)
 			.build();
 
 		connection.on("ReceiveOrder", (order) => {
