@@ -7,18 +7,6 @@ using RealTimeAppServer.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(5173); // HTTP
-    serverOptions.ListenAnyIP(
-        7018,
-        listenOptions =>
-        {
-            listenOptions.UseHttps(); // HTTPS
-        }
-    );
-});
-
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -72,12 +60,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors();
 app.MapControllers();
 app.MapHub<DataHub>("/datahub");
 app.MapHub<ChatHub>("/chathub");
-
-app.UseHttpsRedirection();
 
 app.Run();
