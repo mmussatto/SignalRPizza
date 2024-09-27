@@ -9,10 +9,12 @@ namespace RealTimeAppServer.Hubs;
 public class ChatHub : Hub
 {
     private readonly AppDbContext _context;
+    private ILogger<ChatHub> _logger;
 
-    public ChatHub(AppDbContext context)
+    public ChatHub(AppDbContext context, ILogger<ChatHub> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task SendMessage(int customerId, string sender, string message)
@@ -35,29 +37,31 @@ public class ChatHub : Hub
         await _context.SaveChangesAsync();
 
         await Clients.Group(customerId.ToString()).SendAsync("ReceiveMessage", chatMessage);
+
+        _logger.LogInformation($"Message sent to customer {customerId} from {sender}: {message}");
     }
 
-    public override async Task OnConnectedAsync()
+    public async Task JoinGroup(int customerId)
     {
-        var customerId = Context.GetHttpContext().Request.Query["customerId"];
+        await Groups.AddToGroupAsync(Context.ConnectionId, customerId.ToString());
 
-        if (!string.IsNullOrEmpty(customerId))
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, customerId);
-        }
-
-        await base.OnConnectedAsync();
+        _logger.LogInformation($"Customer {customerId} joined the group");
     }
 
-    public override async Task OnDisconnectedAsync(Exception exception)
+    public async Task LeaveGroup(int customerId)
     {
-        var customerId = Context.GetHttpContext().Request.Query["customerId"];
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, customerId.ToString());
 
-        if (!string.IsNullOrEmpty(customerId))
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, customerId);
-        }
-
-        await base.OnDisconnectedAsync(exception);
+        _logger.LogInformation($"Customer {customerId} left the group");
     }
+
+    // public override async Task OnConnectedAsync()
+    // {
+    //     await base.OnConnectedAsync();
+    // }
+
+    // public override async Task OnDisconnectedAsync(Exception exception)
+    // {
+    //     await base.OnDisconnectedAsync(exception);
+    // }
 }
