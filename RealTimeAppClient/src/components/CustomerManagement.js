@@ -106,7 +106,7 @@ const CustomerManagement = () => {
 			</div>
 			<div className={`chat-window-container ${activeChat ? "open" : ""}`}>
 				{activeChat && (
-					<div className="chat-window">
+					<div className="chat-window-content">
 						<button className="close-button" onClick={handleCloseChat}>
 							✖
 						</button>

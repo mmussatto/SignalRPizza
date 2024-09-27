@@ -137,43 +137,6 @@
 	transform: translateX(0); /* Slide in when open */
 }
 
-.chat-window {
-	border: 1px solid #ccc;
-	padding: 10px;
-	width: 100%;
-	max-width: 400px; /* Limit the maximum width of the chat window */
-	height: 400px;
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	background-color: white;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	animation: slideIn 0.3s ease-in-out;
-}
-
-.chat-window h3 {
-	margin: 0 0 10px 0;
-}
-
-.chat-window .messages {
-	flex: 1;
-	overflow-y: auto;
-	margin-bottom: 10px;
-}
-
-.chat-window .input-group {
-	display: flex;
-}
-
-.chat-window .input-group input {
-	flex: 1;
-	padding: 5px;
-}
-
-.chat-window .input-group button {
-	padding: 5px 10px;
-}
-
 /* Animation for sliding in the chat window */
 @keyframes slideIn {
 	from {

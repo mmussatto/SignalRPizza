@@ -130,7 +130,7 @@ const CustomerOrderPage = () => {
 
 				<div className={`chat-window-container ${isChatOpen ? "open" : ""}`}>
 					{isChatOpen && (
-						<div className="chat-window">
+						<div>
 							<ChatWindow customerId={customerId} sender="Customer" />
 						</div>
 					)}
