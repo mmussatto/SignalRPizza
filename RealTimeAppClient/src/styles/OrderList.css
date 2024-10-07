@@ -17,14 +17,40 @@
 	margin-bottom: 20px;
 }
 
-.order-item {
+.kanban-column ul {
+	padding: 0px;
+}
+
+.orderList__order-item {
+	position: relative;
 	background-color: #fff;
 	padding: 10px;
-	margin-bottom: 10px;
+	margin: 25px 10px;
 	border-radius: 4px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.order-item strong {
+.orderList__order-item.withButton {
+	padding-bottom: 50px;
+}
+
+.orderList__order-item strong {
 	color: #333;
+}
+
+.advance-button {
+	position: absolute;
+	bottom: 5px;
+	left: 50%;
+	transform: translateX(-50%);
+	cursor: pointer;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+.advance-button:hover {
+	background-color: #0056b3;
 }
