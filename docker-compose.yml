@@ -5,8 +5,8 @@ services:
         build:
             context: ./RealTimeAppClient
             dockerfile: Dockerfile
-        environment:
-            - DB_FILE_PATH=/app/RealTimeApp.db
+            args:
+                - REACT_APP_API_BASE_URL=http://localhost:5003
         ports:
             - "3000:80"
         depends_on:
@@ -19,5 +19,6 @@ services:
         ports:
             - "5003:80"
         environment:
+            - DB_FILE_PATH=/app/RealTimeApp.db
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_URLS=http://+:80
