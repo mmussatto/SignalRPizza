@@ -18,6 +18,8 @@ services:
             dockerfile: Dockerfile
         ports:
             - "5003:80"
+        volumes:
+            - ./RealTimeAppServer/RealTimeApp.db:/app/RealTimeApp.db
         environment:
             - DB_FILE_PATH=/app/RealTimeApp.db
             - ASPNETCORE_ENVIRONMENT=Development
