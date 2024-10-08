@@ -23,19 +23,30 @@ public class OrdersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Order>>> GetOrders([FromQuery] string? customerId)
     {
-        if (string.IsNullOrEmpty(customerId))
-            return await _context.Orders.Include(o => o.Customer).ToListAsync();
+        var orders = string.IsNullOrEmpty(customerId)
+            ? await _context.Orders.Include(o => o.Customer).ToListAsync()
+            : await _context
+                .Orders.Include(o => o.Customer)
+                .Where(o => o.CustomerId == int.Parse(customerId))
+                .ToListAsync();
 
-        return await _context
-            .Orders.Include(o => o.Customer)
-            .Where(o => o.CustomerId == int.Parse(customerId))
-            .ToListAsync();
+        // Ensure all DateTime values are treated as UTC
+        foreach (var order in orders)
+        {
+            order.CreatedAt = DateTime.SpecifyKind(order.CreatedAt, DateTimeKind.Utc);
+            if (order.FinishedAt.HasValue)
+            {
+                order.FinishedAt = DateTime.SpecifyKind(order.FinishedAt.Value, DateTimeKind.Utc);
+            }
+        }
+
+        return orders;
     }
 
     [HttpPost]
     public async Task<ActionResult<Order>> PostOrder(Order order)
     {
-        order.CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local);
+        order.CreatedAt = DateTime.UtcNow;
         _context.Orders.Add(order);
         await _context.SaveChangesAsync();
 
@@ -85,6 +96,9 @@ public class OrdersController : ControllerBase
             order.Status++;
         else
             return NoContent();
+
+        // Ensure CreatedAt is treated as UTC
+        order.CreatedAt = DateTime.SpecifyKind(order.CreatedAt, DateTimeKind.Utc);
 
         if (order.Status == PizzaStatus.Completed)
             order.FinishedAt = DateTime.UtcNow;
