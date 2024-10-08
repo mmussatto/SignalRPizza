@@ -35,7 +35,7 @@ public class OrdersController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Order>> PostOrder(Order order)
     {
-        order.CreatedAt = DateTime.UtcNow;
+        order.CreatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local);
         _context.Orders.Add(order);
         await _context.SaveChangesAsync();
 
@@ -92,7 +92,11 @@ public class OrdersController : ControllerBase
         _context.Orders.Update(order);
         await _context.SaveChangesAsync();
 
-        await _hubContext.Clients.All.SendAsync("UpdateOrder", order);
+        var completeOrder = await _context
+            .Orders.Include(o => o.Customer)
+            .FirstOrDefaultAsync(o => o.Id == order.Id);
+
+        await _hubContext.Clients.All.SendAsync("UpdateOrder", completeOrder);
 
         return NoContent();
     }
