@@ -111,3 +111,31 @@ A Swagger documentation is provided in `http://localhost:5003/swagger/index.html
 -   **SignalR Hub**:
     -   `/dataHub`: Provides real-time communication for order updates.
     -   `/chatHub`: Provides real-time communication for chat updates.
+
+## What I Learned About SignalR
+
+### What is SignalR?
+
+SignalR is a powerful library for **real-time web functionality** that allows server-side code to push updates to connected clients instantly, without the need for clients to repeatedly poll the server for changes. One of it's biggest advantages is its ability to abstract the complexities of real-time communication by automatically selecting the best transport method available (e.g., WebSockets, Server-Sent Events, or Long Polling). It can also automatically attempt to reconnect clients if the connection is lost, ensuring a seamless user experience.
+
+### How SignalR Was Used in This Project:
+
+1. **Real-Time Chat**:
+    - SignalR was used to enable real-time communication between employees and customers. The front-end application sends the messages through a hub to the back-end, which in turn, sends the message to the correct recipient. The real-time functionality of the application is what allows a fluent conversation between the two parties.
+2. **Real-Time Order Updates**:
+    - SignalR was also used to update the order list and pizza statistics in real-time. Whenever an order is created or updated, the back-end broadcasts the changes to all connected clients, making it simple and easy to follow updates on each order.
+
+### SignalR Groups:
+
+SignalR groups are a way to organize connections into logical groups. A connection can belong to multiple groups, and messages sent to a group are only received by the connections in that group. This powerful functionality was used to organize and separate chat messages by customer. Each customer has their own group, and employees join and leave groups dynamically based on the customer they are chatting with. This ensures that messages are only sent to the appropriate customer and employee, preventing cross-chat interference. It also allows a single connection to be created for all chat messages.
+
+For example:
+
+-   When an employee opens the chat for Customer 1, they join the group for Customer 1.
+-   When they switch to Customer 2, they leave the group for Customer 1 and join the group for Customer 2.
+
+### Key Takeaways:
+
+-   SignalR is a powerful tool for building real-time applications, and its abstraction of transport methods makes it easy to use.
+-   Groups are an essential feature for managing real-time communication in multi-user scenarios, as they allow you to logically separate messages and updates.
+-   SignalR's integration with .NET and its support for automatic reconnection make it a great choice for building robust real-time systems.
